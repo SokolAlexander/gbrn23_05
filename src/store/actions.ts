@@ -28,7 +28,7 @@ export const getTodos = () => (dispatch: Dispatch<any>) => {
     .then<Todo[]>(res => res.json())
     .then(result => {
       const todos = result.slice(0, 20).reduce<TodosMap>((acc, el) => {
-        acc[el.id] = el;
+        acc[el.id] = {...el, imgs: []};
         return acc;
       }, {});
       dispatch(getTodosSuccess(todos));

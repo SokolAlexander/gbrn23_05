@@ -1,11 +1,5 @@
 import React, {useEffect, useMemo} from 'react';
-import {
-  FlatList,
-  ListRenderItemInfo,
-  ScrollView,
-  SectionList,
-  Text,
-} from 'react-native';
+import {ListRenderItemInfo, SectionList, Text} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {TextField} from '../../components/TextField/TextField';
 
@@ -13,9 +7,9 @@ import {TodoItem} from '../../components/TodoItem/TodoItem';
 import {changeTodo, deleteTodo, getTodos} from '../../store/actions';
 import {selectTodos} from '../../store/selectors';
 import {styles} from './TodoList.styles';
-import {Todo} from './TodoList.types';
+import {Todo, TodoListProps} from './TodoList.types';
 
-export const TodoList = () => {
+export const TodoList = ({navigation}: TodoListProps) => {
   const todos = useSelector(selectTodos);
   const dispatch = useDispatch();
 
@@ -29,6 +23,7 @@ export const TodoList = () => {
       id: Date.now(),
       completed: false,
       title: text,
+      imgs: [],
     };
 
     dispatch(changeTodo(newTodo));
@@ -36,6 +31,10 @@ export const TodoList = () => {
 
   const handleDeleteTodo = (id: number) => {
     dispatch(deleteTodo(id));
+  };
+
+  const toDetails = (id: number) => {
+    navigation.navigate('TodoDetails', {todoId: id});
   };
 
   useEffect(() => {
@@ -47,6 +46,7 @@ export const TodoList = () => {
     <TodoItem
       todo={item}
       i={index}
+      onPress={toDetails}
       onComplete={handlePressTodo}
       onDelete={handleDeleteTodo}
       key={item.id}

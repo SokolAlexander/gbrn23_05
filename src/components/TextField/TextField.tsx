@@ -3,14 +3,25 @@ import {TextInput} from 'react-native';
 import {styles} from './TextField.styles';
 import {TextFieldProps} from './TextField.types';
 
-export const TextField = ({onSubmit}: TextFieldProps) => {
-  const [value, setValue] = useState('');
+export const TextField = ({
+  onSubmit,
+  initialValue = '',
+  onChangeText,
+}: TextFieldProps) => {
+  const [value, setValue] = useState(initialValue);
 
   const handleSubmit = () => {
     if (value) {
-      onSubmit(value);
-      setValue('');
+      onSubmit && onSubmit(value);
+      if (!initialValue) {
+        setValue('');
+      }
     }
+  };
+
+  const handleChange = (text: string) => {
+    setValue(text);
+    onChangeText && onChangeText(text);
   };
 
   return (
@@ -18,7 +29,7 @@ export const TextField = ({onSubmit}: TextFieldProps) => {
       placeholder="Enter a Todo title"
       style={styles.root}
       value={value}
-      onChangeText={setValue}
+      onChangeText={handleChange}
       onSubmitEditing={handleSubmit}
     />
   );

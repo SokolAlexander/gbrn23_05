@@ -6,8 +6,18 @@ import {Checkbox} from '../Checkbox/Checkbox';
 import {styles} from './TodoItem.styles';
 import {TodoItemProps} from './TodoItem.types';
 
-export const TodoItem = ({i, todo, onComplete, onDelete}: TodoItemProps) => {
+export const TodoItem = ({
+  i,
+  todo,
+  onComplete,
+  onDelete,
+  onPress,
+}: TodoItemProps) => {
   const handlePress = () => {
+    onPress(todo.id);
+  };
+
+  const handleComplete = () => {
     onComplete(todo.id);
   };
 
@@ -17,7 +27,7 @@ export const TodoItem = ({i, todo, onComplete, onDelete}: TodoItemProps) => {
   return (
     <View style={styles.row}>
       <TouchableOpacity onPress={handlePress} style={styles.root}>
-        <Checkbox checked={todo.completed} onPress={handlePress} />
+        <Checkbox checked={todo.completed} onPress={handleComplete} />
         <Text style={styles.todoText}>
           {i + 1}: {todo.title}
         </Text>
