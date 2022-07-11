@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
   todoText: {
     fontSize: 17,
     marginLeft: 17,
+    fontFamily: 'Manrope-Bold',
   },
   row: {
     flexDirection: 'row',
