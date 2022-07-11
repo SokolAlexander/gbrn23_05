@@ -1,5 +1,11 @@
 import React, {useEffect, useMemo} from 'react';
-import {Button, ListRenderItemInfo, SectionList, Text} from 'react-native';
+import {
+  Button,
+  FlatList,
+  ListRenderItemInfo,
+  SectionList,
+  Text,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import notifee, {
   AndroidImportance,
@@ -15,6 +21,7 @@ import {changeTodo, deleteTodo, getTodos} from '../../store/actions';
 import {selectTodos} from '../../store/selectors';
 import {styles} from './TodoList.styles';
 import {Todo, TodoListProps} from './TodoList.types';
+import {GesturedComp} from '../../../GesturedComponent';
 
 // 'https://my-cdn.com/icons/snooze.png',
 
@@ -174,9 +181,7 @@ export const TodoList = ({navigation}: TodoListProps) => {
 
   return (
     <>
-      <Button title="Send push" onPress={sendPush} />
-      <Button title="Stop service" onPress={stopService} />
-      <SectionList
+      {/* <SectionList
         contentContainerStyle={styles.container}
         style={styles.root}
         ListHeaderComponent={() => <TextField onSubmit={handleAddTodo} />}
@@ -185,6 +190,13 @@ export const TodoList = ({navigation}: TodoListProps) => {
           {title: 'Not Completed', data: sections.notCompl},
         ]}
         renderSectionHeader={({section}) => <Text>{section.title}</Text>}
+        renderItem={renderTodo}
+      /> */}
+      <FlatList
+        data={sections.notCompl}
+        contentContainerStyle={styles.container}
+        style={styles.root}
+        ListHeaderComponent={() => <TextField onSubmit={handleAddTodo} />}
         renderItem={renderTodo}
       />
     </>
